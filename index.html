@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h1>To-Do List</h1>
+
+<!-- ADD TASK FORM -->
+<form action="/add" method="post">
+    <input type="text" name="name" placeholder="Task Name" required>
+    <input type="text" name="description" placeholder="Task Description">
+    
+    <select name="status">
+        <option value="Pending">Pending</option>
+        <option value="Completed">Completed</option>
+    </select>
+
+    <button type="submit">Add Task</button>
+</form>
+
+<br><br>
+
+<!-- RETRIEVED DATA IN TABLE -->
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Task Name</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for task in tasks %}
+    <tr>
+        <td>{{ task.id }}</td>
+        <td>{{ task.name }}</td>
+        <td>{{ task.description }}</td>
+        <td>{{ task.status }}</td>
+        <td>
+            <a href="/edit/{{ task.id }}">Edit</a> |
+            <a href="/delete/{{ task.id }}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
